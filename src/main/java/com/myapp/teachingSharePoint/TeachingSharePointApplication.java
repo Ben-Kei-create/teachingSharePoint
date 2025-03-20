@@ -1,4 +1,4 @@
-package com.example.teachingSharePoint;
+package com.myapp.teachingSharePoint;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
