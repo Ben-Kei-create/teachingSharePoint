@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>教材アップロード</title>
+</head>
+<body>
+    <h2>教材アップロード</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">ファイルを選択：</label>
+        <input type="file" id="file" name="file" required>
+        <br><br>
+        <input type="submit" value="アップロード">
+    </form>
+    <br>
+    <a href="/">ホームへ戻る</a>
+</body>
+</html>

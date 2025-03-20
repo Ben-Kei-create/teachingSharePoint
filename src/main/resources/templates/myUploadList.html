@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>アップロード済み教材一覧</title>
+</head>
+<body>
+
+    <h2>アップロード済み教材一覧</h2>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>教材名</th>
+            <th>アップロード日</th>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td th:text="${file.id}"></td>
+            <td th:text="${file.name}"></td>
+            <td th:text="${file.uploadDate}"></td>
+        </tr>
+    </table>
+
+    <br>
+    <a th:href="@{/upload}">教材をアップロードする</a> |
+    <a th:href="@{/}">ホームへ戻る</a>
+
+</body>
+</html>
