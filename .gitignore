@@ -35,3 +35,26 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# 1. Spring Bootの設定ファイルを無視
+/application.properties
+/application.yml
+
+# 2. IDEの設定ファイルを無視（EclipseやIntelliJなど）
+/.idea/
+/.vscode/
+/*.iml
+
+# 3. コンパイル後のクラスファイルを無視
+/target/
+/build/
+
+# 4. ログファイルを無視
+/logs/
+/*.log
+
+# 5. 環境設定ファイルを無視（ローカル設定ファイルなど）
+/*.env
+
+
+
