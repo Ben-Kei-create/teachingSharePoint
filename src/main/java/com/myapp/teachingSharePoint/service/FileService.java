@@ -26,4 +26,14 @@ public class FileService {
     public List<UploadedFile> getAllFiles() {
         return files;
     }
+
+	public UploadedFile findFileById(int i) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	public UploadedFile findFileById(Long id) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }

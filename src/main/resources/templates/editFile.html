@@ -2,25 +2,26 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>アップロード管理画面</title>
+    <title>修正画面</title>
 </head>
 <body>
-    <h2>アップロード済み教材一覧</h2>
-
-	<a th:href="@{/newFile}">新規アップロード</a>
+    <h2>アップロード済み教材の修正画面</h2>
+	
+	ここでは、アップロードをすでにされたファイルの修正を行うことができます。
 	
 	<table border="1">
 	    <tr>
 	        <th>ID</th>
 	        <th>教材名</th>
 	        <th>アップロード日</th>
-			<th>操作</th>
+			<th>　　　　</th>
 	    </tr>
 	    <tr th:each="file : ${files}">
 	        <td th:text="${file.id}"></td>
 	        <td th:text="${file.name}"></td>
 	        <td th:text="${file.uploadDate}"></td>
-			<td><a th:href="@{/editFile/{id}(id=${file.id})}" title="修正画面へ遷移">修正画面</a></td>
+	        <!-- 編集リンクを修正 -->
+			<td><a th:href="@{/editFile/{id}(id=${file.id})}">修正画面</a></td>
 	    </tr>
 	</table>
 	<a th:href="@{/}">ホームへ戻る</a>
