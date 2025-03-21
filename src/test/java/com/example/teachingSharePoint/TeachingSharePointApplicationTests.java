@@ -1,13 +1,13 @@
-package com.example.teachingSharePoint;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class TeachingSharePointApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.myapp.teachingSharePoint;
+//
+//import org.springframework.boot.SpringApplication;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+//
+//@SpringBootApplication
+//@EnableJpaRepositories("com.myapp.teachingSharePoint.Repository") // リポジトリパッケージを指定
+//public class TeachingSharePointApplication {
+//    public static void main(String[] args) {
+//        SpringApplication.run(TeachingSharePointApplication.class, args);
+//    }
+//}

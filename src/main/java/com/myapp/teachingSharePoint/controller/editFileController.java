@@ -11,11 +11,11 @@ import com.myapp.teachingSharePoint.service.FileService;
 
 @Controller
 @RequestMapping("/editFile")
-public class editFileController {
+public class EditFileController {
 
     private final FileService fileService;
 
-    public editFileController(FileService fileService) {
+    public EditFileController(FileService fileService) {
         this.fileService = fileService;
     }
 

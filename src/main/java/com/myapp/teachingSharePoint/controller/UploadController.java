@@ -35,7 +35,7 @@ public class UploadController {
         // idを使ってファイル情報を取得
         UploadedFile file = null;
 		try {
-			file = FileService.findFileById(id);
+			file = fileService.findFileById(id);
 		} catch (Exception e) {
 			    model.addAttribute("error", "ファイルを取得できませんでした。");
 			    return "errorPage";  // エラーページに遷移

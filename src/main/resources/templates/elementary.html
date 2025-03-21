@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middle School Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00a896;
+            --secondary-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --text-color: #343a40;
+            --light-gray: #f1f3f5;
+            --medium-gray: #adb5bd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            background-color: white;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .results-count {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-label {
+            font-weight: 500;
+        }
+        
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .view-btn.active {
+            background-color: var(--light-gray);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter {
+            background-color: var(--secondary-color);
+            border-radius: 25px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+        
+        .filter.active {
+            background-color: #e6f7f5;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .filter-all {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .filter i {
+            font-size: 0.8rem;
+        }
+        
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .product {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .product-image {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #212529;
+        }
+        
+        .creator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .creator-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        
+        .creator-name {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .product-description {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        
+        .product-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background-color: var(--secondary-color);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .product-links {
+            margin-top: 10px;
+        }
+        
+        .product-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .product-pricing {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            min-width: 150px;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: var(--medium-gray);
+        }
+        
+        .current-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        .rating-count {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            .product {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                width: 100%;
+                height: auto;
+            }
+            
+            .product-pricing {
+                align-items: flex-start;
+            }
+            
+            .filters {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="results-header">
+            <p class="results-count" th:text="${resultsCount} + ' results'">3,500,000+ results</p>
+            <div class="sort-options">
+                <span class="sort-label">Sort by:</span>
+                <div class="sort-dropdown">
+                    <span th:text="${sortOption}">Relevance</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn active">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="view-btn">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <h1>Middle school resources</h1>
+        
+        <div class="filters">
+            <div class="filter active">
+                <span>Middle school</span>
+                <i class="fas fa-times"></i>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter">
+                <span>Subject</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter">
+                <span>Price</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter">
+                <span>Standard</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter">
+                <span>Format</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter filter-all">
+                <i class="fas fa-sliders-h"></i>
+                <span>All filters (1)</span>
+            </div>
+        </div>
+        
+        <div class="product-list">
+            <div th:each="product : ${products}" class="product">
+                <img th:src="${product.imageUrl}" th:alt="${product.title}" class="product-image" 
+                     src="/placeholder.svg?height=250&width=250" alt="Teacher Planner">
+                
+                <div class="product-details">
+                    <h2 class="product-title" th:text="${product.title}">Editable Teacher Planner 2025-2026 | Digital & Printable Lesson Teacher Binder</h2>
+                    
+                    <div class="creator">
+                        <img th:src="${product.creator.avatarUrl}" th:alt="${product.creator.name}" class="creator-avatar"
+                             src="/placeholder.svg?height=30&width=30" alt="Creator Avatar">
+                        <div>
+                            <div>Created by</div>
+                            <a href="#" class="creator-name" th:text="${product.creator.name}" th:href="${product.creator.url}">One Stop Teacher Shop</a>
+                        </div>
+                    </div>
+                    
+                    <p class="product-description" th:text="${product.description}">
+                        Are you tired of searching for a planner that will fit your unique schedule, needs, and style? Look no further! The One Stop Teacher Planner is Editable and Customizable! Choose to print your planner or go 100% digital! Either way, the One Stop Teacher...
+                    </p>
+                    
+                    <div class="product-tags">
+                        <span class="tag" th:each="tag : ${product.tags}" th:text="${tag}">K - 12th</span>
+                        <span class="tag">Back to School, Classroom Management, For All Subjects</span>
+                    </div>
+                    
+                    <div class="product-links" th:if="${product.additionalInfo}">
+                        <div>Also included in:</div>
+                        <a href="#" class="product-link" th:text="${product.additionalInfo}" th:href="${product.additionalInfoUrl}">
+                            One Stop Teacher Planner BUNDLE | Printable & Digital | FREE Updates | 2025-2026
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-pricing">
+                    <div class="original-price" th:if="${product.originalPrice}" th:text="'$' + ${product.originalPrice}">$30.00</div>
+                    <div class="current-price" th:text="'$' + ${product.currentPrice}">$17.99</div>
+                    
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value" th:text="${product.rating}">4.8</span>
+                        <span class="rating-count" th:text="'(' + ${product.ratingCount} + ')'">
+                            (40.7K)
+                        </span>
+                    </div>
+                    
+                    <button class="btn btn-primary">Add to cart</button>
+                    <button class="btn btn-secondary">
+                        <i class="far fa-bookmark"></i>
+                        Wish List
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Fallback static content when no products are provided -->
+            <div th:if="${#lists.isEmpty(products)}" class="product">
+                <img src="/placeholder.svg?height=250&width=250" alt="Teacher Planner" class="product-image">
+                
+                <div class="product-details">
+                    <h2 class="product-title">Editable Teacher Planner 2025-2026 | Digital & Printable Lesson Teacher Binder</h2>
+                    
+                    <div class="creator">
+                        <img src="/placeholder.svg?height=30&width=30" alt="Creator Avatar" class="creator-avatar">
+                        <div>
+                            <div>Created by</div>
+                            <a href="#" class="creator-name">One Stop Teacher Shop</a>
+                        </div>
+                    </div>
+                    
+                    <p class="product-description">
+                        Are you tired of searching for a planner that will fit your unique schedule, needs, and style? Look no further! The One Stop Teacher Planner is Editable and Customizable! Choose to print your planner or go 100% digital! Either way, the One Stop Teacher...
+                    </p>
+                    
+                    <div class="product-tags">
+                        <span class="tag">K - 12th</span>
+                        <span class="tag">Back to School, Classroom Management, For All Subjects</span>
+                    </div>
+                    
+                    <div class="product-links">
+                        <div>Also included in:</div>
+                        <a href="#" class="product-link">
+                            One Stop Teacher Planner BUNDLE | Printable & Digital | FREE Updates | 2025-2026
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-pricing">
+                    <div class="original-price">$30.00</div>
+                    <div class="current-price">$17.99</div>
+                    
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value">4.8</span>
+                        <span class="rating-count">(40.7K)</span>
+                    </div>
+                    
+                    <button class="btn btn-primary">Add to cart</button>
+                    <button class="btn btn-secondary">
+                        <i class="far fa-bookmark"></i>
+                        Wish List
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Second product example -->
+            <div th:if="${#lists.isEmpty(products)}" class="product">
+                <img src="/placeholder.svg?height=250&width=250" alt="Making Inferences Worksheet" class="product-image">
+                
+                <div class="product-details">
+                    <h2 class="product-title">Making Inferences - Inferencing Activities Worksheets Inference Anchor Chart</h2>
+                    
+                    <div class="creator">
+                        <img src="/placeholder.svg?height=30&width=30" alt="Creator Avatar" class="creator-avatar">
+                        <div>
+                            <div>Created by</div>
+                            <a href="#" class="creator-name">Rachel Lynette</a>
+                        </div>
+                    </div>
+                    
+                    <p class="product-description">
+                        Making Inferences is an important reading skill, and these inferencing task cards and digital activities can help! Each card/slide features a short passage with a text-dependent question plus a follow-up question asking students to explain their...
+                    </p>
+                    
+                    <div class="product-tags">
+                        <span class="tag">4th - 6th</span>
+                        <span class="tag">Balanced Literacy, Reading, Reading Strategies</span>
+                    </div>
+                </div>
+                
+                <div class="product-pricing">
+                    <div class="current-price">$3.96</div>
+                    
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value">4.8</span>
+                        <span class="rating-count">(14.9K)</span>
+                    </div>
+                    
+                    <button class="btn btn-primary">Add to cart</button>
+                    <button class="btn btn-secondary">
+                        <i class="far fa-bookmark"></i>
+                        Wish List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

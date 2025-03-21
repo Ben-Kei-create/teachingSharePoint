@@ -1,72 +1,124 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教育教材共有プラットフォーム</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .resource-card {
+            width: 23%; /* 4列にする */
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .resource-card img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1; /* 正方形 */
+            object-fit: cover;
+        }
+        .title {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .user {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .likes {
+            font-size: 0.9em;
+            color: #d00;
+        }
+        @media (max-width: 800px) {
+            .resource-card {
+                width: 48%; /* 2列にする */
+            }
+        }
+        @media (max-width: 500px) {
+            .resource-card {
+                width: 100%; /* 1列にする */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>教育教材共有プラットフォーム</h1>
-
-    <nav>
+    <h1><a href="#">教育教材共有プラットフォーム</a></h1>
+	
+	<nav>
         <ul>
-            <li><a href="#">ホーム</a></li>
             <li><a href="#">教材検索</a></li>
-			<li><a th:href="@{/upload}">アップロード</a></li>
-            <li><a href="#">ダウンロード</a></li>
+            <li><a th:href="@{/upload}">アップロード</a></li>
             <li><a href="#">ログイン</a></li>
             <li><a href="#">登録</a></li>
             <li><a href="#">マイアカウント</a></li>
         </ul>
     </nav>
 
-    <section>
-        <h2>システム概要</h2>
-        <p>このプラットフォームでは、ユーザーが教育教材を共有・ダウンロードできます。</p>
-        <ul>
-            <li>無料会員: 月10件のアップロード・ダウンロード制限</li>
-            <li>サブスク会員: アップロード・ダウンロード無制限</li>
-        </ul>
-    </section>
+    <!-- 画像セクション -->
 
-    <section>
-        <h2>基本機能</h2>
-        <ul>
-            <li>ユーザー登録 / ログイン</li>
-            <li>教材のアップロード・ダウンロード</li>
-            <li>教材検索・絞り込み</li>
-            <li>教材詳細表示</li>
-            <li>アカウント管理</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>サブスク会員について</h2>
-        <p>月額100円で無制限に教材のアップロード・ダウンロードが可能になります。</p>
-        <p>決済は <strong>Stripe</strong> により安全に処理されます。</p>
-        <button>サブスク会員登録</button>
-    </section>
-
-    <section>
-        <h2>ダウンロード履歴・管理機能</h2>
-        <ul>
-            <li>ダウンロード履歴を確認可能</li>
-            <li>アップロードした教材の管理・削除</li>
-            <li>管理者はすべての教材・ユーザーを管理</li>
-        </ul>
-    </section>
+	<img src="/images/no_image_yoko.jpg" alt="No Image" style="width: 25%; height: auto;">
 	
 	
 	<section>
-	    <h2>教材一覧</h2>
-	    <ul>
-	        <li>教材の詳細・閲覧・ダウンロードはこちら</li>
-	        <li>全世界でアップロードされたデータは、すべてこちらダウンロードできます！</li>
-	        <li>無料・サブスク会員でダウンロードできる種類・数は異なります</li>
-	    </ul>
+	    <h2>すべてのリソース</h2>
+	    <div class="container">
+	        <div class="resource-card" th:each="resource : ${allResources}">
+	            <img th:src="${resource.imageUrl}" alt="教材画像">
+	            <div class="title" th:text="${resource.title}"></div>
+	            <div class="user" th:text="${resource.userName}"></div>
+	            <div class="likes">❤️ <span th:text="${resource.likes}"></span></div>
+	        </div>
+	    </div>
 	</section>
 	
 	
+<!--     小学校のリソース -->
+<!--	 <section>-->
+<!--	     <h2>小学校のリソースを探す</h2>-->
+<!--	     <div class="container">-->
+<!--	         <div class="resource-card" th:each="resource : ${elementaryResources}">-->
+<!--	             <img th:src="${resource.imageUrl}" alt="教材画像">-->
+<!--	             <div class="title" th:text="${resource.title}"></div>-->
+<!--	             <div class="user" th:text="${resource.userName}"></div>-->
+<!--	             <div class="likes">❤️ <span th:text="${resource.likes}"></span></div>-->
+<!--	         </div>-->
+<!--	     </div>-->
+<!--	 </section>-->
+<!--     中学校のリソース -->
+<!--    <section>-->
+<!--        <h2>中学校のリソースを探す</h2>-->
+<!--        <div class="container">-->
+<!--            <div class="resource-card" th:each="resource : ${elementaryResources}">-->
+<!--                <img th:src="${resource.imageUrl}" alt="教材画像">-->
+<!--                <div class="title" th:text="${resource.title}"></div>-->
+<!--                <div class="user" th:text="${resource.userName}"></div>-->
+<!--                <div class="likes">❤️ <span th:text="${resource.likes}"></span></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--     高校のリソース -->
+<!--    <section>-->
+<!--        <h2>高校のリソースを探す</h2>-->
+<!--        <div class="container">-->
+<!--            <div class="resource-card" th:each="resource : ${elementaryResources}">-->
+<!--                <img th:src="${resource.imageUrl}" alt="教材画像">-->
+<!--                <div class="title" th:text="${resource.title}"></div>-->
+<!--                <div class="user" th:text="${resource.userName}"></div>-->
+<!--                <div class="likes">❤️ <span th:text="${resource.likes}"></span></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
     <footer>
         <p>&copy; 2025 教育教材共有プラットフォーム</p>
     </footer>
