@@ -16,12 +16,12 @@
 	        <th>アップロード日</th>
 			<th>　　　　</th>
 	    </tr>
-	    <tr th:each="file : ${files}">
-	        <td th:text="${file.id}"></td>
-	        <td th:text="${file.name}"></td>
-	        <td th:text="${file.uploadDate}"></td>
+	    <tr th:each="resource : ${resources}">
+	        <td th:text="${resource.id}"></td>
+	        <td th:text="${resource.name}"></td>
+	        <td th:text="${resource.uploadDate}"></td>
 	        <!-- 編集リンクを修正 -->
-			<td><a th:href="@{/editFile/{id}(id=${file.id})}">修正画面</a></td>
+			<td><a th:href="@{/editResource/{id}(id=${resource.id})}">修正画面</a></td>
 	    </tr>
 	</table>
 	<a th:href="@{/upload}">戻る</a>

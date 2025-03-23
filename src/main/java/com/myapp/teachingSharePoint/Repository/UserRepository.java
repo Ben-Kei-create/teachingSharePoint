@@ -1,5 +1,7 @@
 package com.myapp.teachingSharePoint.Repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +16,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	String findUserNameByUserId(@Param("userId") Long userId);
 	
 	User findUserNameByUserId(Integer userId);
+
+    Optional<User> findById(Integer userId);  // UserをOptionalで取得
+
 }

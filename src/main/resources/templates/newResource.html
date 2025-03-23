@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>教材のアップロード</title>
+</head>
+<body>
+
+	<a th:href="@{/upload}">戻る</a>
+	
+	<form th:action="@{/newResource}" method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="userId" value="1"> <!-- 仮のユーザーID -->
+	    <label for="title">タイトル：</label>
+	    <input type="text" id="title" name="title" required>
+	    <br>
+
+	    <label for="description">説明：</label>
+	    <textarea id="description" name="description"></textarea>
+	    <br>
+
+	    <label for="category">カテゴリ：</label>
+	    <select id="category" name="category">
+	        <option value="小学校">小学校</option>
+	        <option value="中学校">中学校</option>
+	        <option value="高校">高校</option>
+	    </select>
+	    <br>
+
+	    <label for="resource">ファイルを選択：</label>
+	    <input type="file" id="resource" name="resource" required>
+	    <br>
+
+	    <input type="submit" value="アップロード">
+	</form>
+
+</body>
+</html>

@@ -7,20 +7,26 @@
 <body>
     <h2>アップロード済み教材一覧</h2>
 
-	<a th:href="@{/newFile}">新規アップロード</a>
+	<a th:href="@{/newResource}">新規アップロード</a>
 	
+	<h2>教材一覧</h2>
+
 	<table border="1">
 	    <tr>
-	        <th>ID</th>
-	        <th>教材名</th>
-	        <th>アップロード日</th>
-			<th>操作</th>
+	        <th>タイトル</th>
+	        <th>説明</th>
+	        <th>カテゴリ</th>
+	        <th>画像</th>
+	        <th>アップロード者</th>
 	    </tr>
-	    <tr th:each="file : ${files}">
-	        <td th:text="${file.id}"></td>
-	        <td th:text="${file.name}"></td>
-	        <td th:text="${file.uploadDate}"></td>
-			<td><a th:href="@{/editFile/{id}(id=${file.id})}" title="修正画面へ遷移">修正画面</a></td>
+	    <tr th:each="resource : ${resources}">
+	        <td th:text="${resource.title}"></td>
+	        <td th:text="${resource.description}"></td>
+	        <td th:text="${resource.category}"></td>
+	        <td>
+	            <img th:src="@{${resource.imageUrl}}" width="100">
+	        </td>
+	        <td th:text="${resource.userName}"></td>
 	    </tr>
 	</table>
 	<a th:href="@{/}">ホームへ戻る</a>
